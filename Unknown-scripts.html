@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Anim Chaner</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: black;
+  overflow: hidden;
+  color: white;
+}
+
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 10;
+}
+
+.title {
+  font-size: 4rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  animation: glow 2s infinite alternate;
+}
+
+.subtitle {
+  margin-top: 15px;
+  font-size: 1.2rem;
+  color: #aaa;
+}
+
+.warning {
+  margin-top: 30px;
+  font-size: 1rem;
+  color: red;
+  animation: blink 1s infinite;
+}
+
+.fake-console {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  width: 400px;
+  height: 180px;
+  background: rgba(0,0,0,0.7);
+  border: 1px solid #00ff88;
+  padding: 10px;
+  overflow: hidden;
+  color: #00ff88;
+  font-size: 13px;
+  z-index: 10;
+}
+
+.line {
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 10px cyan, 0 0 20px cyan;
+  }
+  to {
+    text-shadow: 0 0 20px magenta, 0 0 40px magenta;
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+</style>
+</head>
+<body>
+<canvas id="bg"></canvas>
+
+<div class="center">
+  <div class="title">Anim Chaner</div>
+  <div class="subtitle">Protected Script System</div>
+  <div class="warning">⚠ Unauthorized Copy Attempt Detected ⚠</div>
+</div>
+
+<div class="fake-console" id="console"></div>
+
+<script>
+const canvas = document.getElementById('bg');
+const ctx = canvas.getContext('2d');
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const particles = [];
+
+for(let i = 0; i < 120; i++) {
+  particles.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    radius: Math.random() * 2 + 1,
+    dx: (Math.random() - 0.5) * 2,
+    dy: (Math.random() - 0.5) * 2
+  });
+}
+
+function animate() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  particles.forEach(p => {
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.radius,0,Math.PI*2);
+    ctx.fillStyle = 'cyan';
+    ctx.fill();
+
+    p.x += p.dx;
+    p.y += p.dy;
+
+    if(p.x < 0 || p.x > canvas.width) p.dx *= -1;
+    if(p.y < 0 || p.y > canvas.height) p.dy *= -1;
+  });
+
+  requestAnimationFrame(animate);
+}
+
+animate();
+
+const logs = [
+  '[SYSTEM] Initializing animation...',
+  '[CHECK] Verifying script ownership...',
+  '[OK] Encryption enabled.',
+  '[WARNING] Copy attempt detected.',
+  '[INFO] Launching troll sequence...',
+  '[SUCCESS] Fake protection active.',
+  '[INFO] Animation loaded successfully.'
+];
+
+const consoleBox = document.getElementById('console');
+let index = 0;
+
+setInterval(() => {
+  if(index < logs.length) {
+    const div = document.createElement('div');
+    div.className = 'line';
+    div.textContent = logs[index];
+    consoleBox.appendChild(div);
+    consoleBox.scrollTop = consoleBox.scrollHeight;
+    index++;
+  }
+}, 1000);
+
+window.addEventListener('resize', () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
+
+// harmless troll popup
+setTimeout(() => {
+  alert('Nice try 😎 This script is protected.');
+}, 5000);
+</script>
+</body>
+</html>
